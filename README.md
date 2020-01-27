@@ -36,6 +36,8 @@ King of the Hill
 
 Class Designs
 ----------
+![1](/Class%20Design/Images/Class%20Design%20-%20Warrior.png)
+![1](/Class%20Design/Images/Class%20Design%20-%20Mage.png)
 ![1](/Class%20Design/Images/Class%20Design%20-%20Alchemist.png)
 
 
