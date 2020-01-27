@@ -36,6 +36,6 @@ King of the Hill
 
 Class Designs
 ----------
-![1](/Class Designs/Images/Class Design - Alchemist.png)
+![1](/Class%20Design/Images/Class%20Design%20-%20Alchemist.png)
 
 
