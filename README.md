@@ -36,6 +36,6 @@ King of the Hill
 
 Class Designs
 ----------
-![1](/Images/1.PNG)
+![1](/Class Designs/Images/Warrior.PNG)
 
 
