@@ -1,12 +1,6 @@
-Name Ideas
+Project Name
 ----------
 Runestorm
-Swords and Scrolls
-Mortal Tale
-Spell-watch
-Scroll of Doom
-Combat Dynasty
-Arcanerite
 
 Classes
 -------
