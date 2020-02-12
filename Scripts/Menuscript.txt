@@ -1,0 +1,21 @@
+local remote = game.ReplicatedStorage.ChangeTeam
+local menuButton = script.Parent:WaitForChild("Changeteams")
+local frame = script.Parent:WaitForChild("TeamFrame")
+local red = "Really red"
+local blue = "Really blue"
+
+
+
+frame.RedButton.MouseButton1Click:Connect(function()
+	remote:FireServer(BrickColor.new(red))
+	frame.Visible = false;
+end)
+
+frame.BlueButton.MouseButton1Click:Connect(function()
+	remote:FireServer(BrickColor.new(blue))
+	frame.Visible = false;
+end)
+
+menuButton.MouseButton1Click:Connect(function()
+	frame.Visible = not frame.Visible
+end)
