@@ -1,0 +1,7 @@
+game.ReplicatedStorage.ClientScore.OnClientEvent:Connect(function(red, blue)
+	
+	script.parent.RedScore.Text = red
+	
+	script.parent.BlueScore.Text = blue
+	
+end)
