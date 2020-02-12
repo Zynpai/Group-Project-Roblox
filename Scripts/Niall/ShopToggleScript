@@ -1,0 +1,17 @@
+local button = script.Parent
+local frame = script.Parent.Parent.ShopFrame
+local toggled = false
+ 
+local function onButtonActivated()
+	if toggled == false then
+		button.Image = ""
+		frame.Visible = false;
+		toggled = true
+	else		
+		button.Image = ""
+		frame.Visible = true;
+		toggled = false
+	end
+end
+ 
+button.Activated:Connect(onButtonActivated)
