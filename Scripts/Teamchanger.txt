@@ -1,0 +1,4 @@
+game.ReplicatedStorage.ChangeTeam.OnServerEvent:Connect(function(player, teamColor)
+	player.TeamColor = teamColor
+	player:LoadCharacter()
+end)
