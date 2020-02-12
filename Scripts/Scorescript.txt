@@ -1,0 +1,88 @@
+Redscore = Instance.new("IntValue")
+Bluescore = Instance.new("IntValue")
+Captureval = Instance.new("IntValue")
+local Team = Instance.new("StringValue")
+be = game.ReplicatedStorage.ScoreUpdater
+part1 = game.Workspace.Hill
+part2 = game.Workspace["Robloxian Flag"]:FindFirstChild("Part")
+Team.Value = "None"
+Captureval.Value = 5
+
+--the update function
+local function OnEvent()
+	--depending on the team the point will capture in that teams direction
+	if(Team.Value == "None") then
+		return
+	end
+	if(Team.Value == "Red") then
+		Captureval.Value = Captureval.Value + 1
+		if(Captureval.Value > 10) then
+			Captureval.Value = 10
+		end
+	end
+	if(Team.Value == "Blue") then
+		Captureval.Value = Captureval.Value - 1
+		if(Captureval.Value < 0) then
+			Captureval.Value = 0
+		end
+	end
+	--once captured by a team, change the color and update the score
+	if(Captureval.Value >= 7) then
+		Redscore.Value = Redscore.Value + 1
+		game.StarterGui.ScreenGui.RedScore.Text = Redscore.Value
+		part1.BrickColor = BrickColor.new("Really red")
+		part2.BrickColor = BrickColor.new("Really red")
+	end
+	if(Captureval.Value <= 3) then
+		Bluescore.Value = Bluescore.Value + 1
+		game.StarterGui.ScreenGui.BlueScore.Text = Bluescore.Value
+		part1.BrickColor = BrickColor.new("Really blue")
+		part2.BrickColor = BrickColor.new("Really blue")
+	end
+	if(Captureval.Value > 3 and Captureval.Value < 7) then
+		part1.BrickColor = BrickColor.new("Institutional white")
+		part2.BrickColor = BrickColor.new("Institutional white")
+	end
+end
+
+be.Event:Connect(OnEvent)
+
+
+--capture point collision detection
+part1.Touched:Connect(function(touchedpart)
+	local parentpart = touchedpart.Parent
+	local humanoid = parentpart:FindFirstChildWhichIsA("Humanoid")
+	local team = BrickColor.White()
+	if humanoid then
+		--if the humanoid touching's name matches a player on the server, get the player's team color
+		for i,p in pairs(game.Players:GetChildren()) do
+			if parentpart.Name == p.Name then
+				team = p.TeamColor
+				break
+			end
+		end
+		--if the team color matches an existing team, capture the point!
+		if team == BrickColor.new("Really red") then
+			Team.Value = "Red"
+		end
+		if team == BrickColor.new("Really blue") then
+			Team.Value = "Blue"
+		end
+	end
+	
+end)
+
+
+--when score is updated, give it to the clients
+local function Client()
+	game.ReplicatedStorage.ClientScore:FireAllClients(Redscore.Value, Bluescore.Value)
+end
+
+Redscore.Changed:Connect(Client)
+Bluescore.Changed:Connect(Client)
+
+--check for increased score every N seconds, N being the time in the wait function
+while true do
+	be:Fire()
+	wait(0.9)
+end
