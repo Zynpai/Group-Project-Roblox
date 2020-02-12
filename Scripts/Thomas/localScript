@@ -1,0 +1,113 @@
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+
+
+-- WARRIOR ABILITIES
+local function shield_bash_ablty(actionName, inputState, inputObj)
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:Wait()
+	end
+	
+    if inputState == Enum.UserInputState.Begin then
+        print("Handling Action: shield_bash_ablty")
+		-- Creating hitbox part
+		local hitbox = Instance.new("Part", workspace)
+		-- Hitbox properties
+		hitbox.Name = "hitbox_shield_bash"
+		hitbox.Shape = Enum.PartType.Block
+		hitbox.Size = Vector3.new("4, 4, 4")
+		hitbox.Anchored = "false"
+		hitbox.Color = Color3.new(.4, 1, .2)
+		hitbox.Parent = game.Workspace
+		hitbox.Transparency = 0.1
+		hitbox.Position = Vector3(0, 0, 0)
+		
+		-- The idea is that a block is created in front of the player that is the size of the hitbox we want
+		-- The part will be invisible and deal damage on contact
+    end
+end
+
+local function shield_wall_ablty(actionName, inputState, inputObj)
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:Wait()
+	end
+		
+	if inputState == Enum.UserInputState.Begin then
+		print("Handling Action: shield_wall_ablty")
+		
+		-- Player has the biggest health pool possible, after 4 seconds set health back to normal
+		char.MaxHealth = math.huge
+		wait(4)
+		char.MaxHealth = 100
+		
+		-- The idea is that the player is just invulnerable
+	end
+end
+
+local function inspiration_ablty(actionName, inputState, inputObj)
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:wait()
+	end
+	
+	if inputState == Enum.UserInputState.Begin then
+		print("Handling Action: inspiration_ablty")
+		-- The default value is WalkSpeed = 16 (16 blocks a second)
+		char.Humanoid.WalkSpeed = 32
+		wait(6)
+		char.Humanoid.WalkSpeed = 16
+	end
+end
+
+local function whirlwind_ult(actionName, inputState, inputObj)
+	if inputState == Enum.UserInputState.Begin then
+		print("Handling Action: whirlwind_ult")
+	end
+end
+	
+
+-- MAGE ABILTIES
+local function fireball_ablty(actionName, inputState, inputObj)
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:Wait()
+	end
+	
+	if inputState == Enum.UserInputState.Begin then
+		print("Handling Action: fireball_ablty")
+	end
+end
+
+local function force_push_ablty(actionName, inputState, inputObj)
+	-- Create character object
+	local char = player.Character
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:Wait()
+	end
+end
+
+local function arcane_blast_ablty(actionName, inputState, inputObj)
+	-- Just to make sure there is a character object (required for some reason)
+	if not char or not char.Parent then
+		character = player.CharacterAdded:Wait()
+	end
+end
+	
+-- BINDS
+-- (These need to be changed so that only abilities can be used when you've chosen that class)
+
+-- WARRIOR ABILITY KEY BINDS
+ContextActionService:BindAction("shield_bash", shield_bash_ablty, false, Enum.KeyCode.F)
+ContextActionService:BindAction("shield_wall", shield_wall_ablty, false, Enum.KeyCode.G)
+ContextActionService:BindAction("inspiration", inspiration_ablty, false, Enum.KeyCode.C)
+ContextActionService:BindAction("whirlwind", whirlwind_ult, false, Enum.KeyCode.V)
+
+
+-- MAGE ABILITY KEY BINDS
