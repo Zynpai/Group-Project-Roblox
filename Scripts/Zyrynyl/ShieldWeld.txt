@@ -1,0 +1,13 @@
+local tool = script.Parent
+
+script.parent.Equipped:Connect(function()
+	
+local part = tool.Shield -- Handle that you'd be holding
+local Character =  script.Parent.Parent -- Character
+local weld = Instance.new("Weld",part)
+weld.Part0 = part --Attach to the handle
+weld.Part1 = Character["LeftUpperArm"] --Attach to the right hand.
+weld.C0 = CFrame.new(0, 0, 0.7) + Vector3.new(0,Character["LeftUpperArm"].Size.Y/2,0)
+weld.C0 = CFrame.new(0, 0, 0.7) * CFrame.Angles(0,math.rad(270), 0)
+
+end)
