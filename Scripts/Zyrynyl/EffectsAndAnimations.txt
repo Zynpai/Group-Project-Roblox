@@ -1,0 +1,155 @@
+
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+local function inspiration_ablty(actionName, inputState, inputObj)
+	local TweenService = game:GetService("TweenService")
+		 
+	-- instance a part and a mesh
+	local part = Instance.new("Part")
+	part.Size = Vector3.new(4, 8, 4)
+	part.Position = Vector3.new(0, 4, 0)
+	part.Anchored = false
+	part.CanCollide = false 
+	part.Transparency = 0.8
+			 
+	local mesh = Instance.new("SpecialMesh", part)
+	mesh.MeshType = Enum.MeshType.FileMesh
+	mesh.MeshId = "rbxassetid://1064384314"
+	mesh.TextureId = "rbxassetid://1064384429"
+	mesh.Offset = Vector3.new(0, 0, 0)
+	mesh.Scale = Vector3.new(0.3, 0.3, 0.3)
+			
+	local Character =  script.Parent.Parent -- Character
+	local weld = Instance.new("Weld",part)
+	weld.Part0 = part --Attach to the handle
+	weld.Part1 = Character["UpperTorso"] --Attach to the right hand.
+	weld.C0 = CFrame.new(0, 0, 0.7) + Vector3.new(0,Character["UpperTorso"].Size.Y/2,0)
+	weld.C0 = CFrame.new(0, 0, 0.7) * CFrame.Angles(math.rad(270), math.rad(180), 0)
+			 
+	-- selection box to show part extents
+	--local box = Instance.new("SelectionBox", part)
+	--box.Adornee = part
+			 
+	part.Parent = Character
+			 
+	-- animate offset and scale with a tween
+	local tween = TweenService:Create(
+	    mesh,
+		TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0),
+		{Scale = Vector3.new(0.1, 0.1, 0.1), Offset = Vector3.new(0, 2, 0)}
+	)
+			
+	local inspiration = Character.Humanoid:LoadAnimation(script.Parent.Inspire)
+			
+	inspiration:Play()		 
+	tween:Play()
+	wait(2.0)
+	tween:Destroy()
+	part:Destroy()
+	mesh:Destroy()
+end
+
+local function shield_wall_ablty(actionName, inputState, inputObj)
+	local TweenService = game:GetService("TweenService")
+		 
+	-- instance a part and a mesh
+	local part = Instance.new("Part")
+	part.Size = Vector3.new(4, 8, 4)
+	part.Position = Vector3.new(0, 4, 0)
+	part.Anchored = false
+	part.CanCollide = false 
+	part.Transparency = 0.8
+			 
+	local mesh = Instance.new("SpecialMesh", part)
+	mesh.MeshType = Enum.MeshType.FileMesh
+	mesh.MeshId = "rbxassetid://1064384314"
+	mesh.TextureId = "rbxassetid://1064384429"
+	mesh.Offset = Vector3.new(0, 0, 0)
+	mesh.Scale = Vector3.new(0.4, 0.4, 0.4)
+			
+	local Character =  script.Parent.Parent -- Character
+	local weld = Instance.new("Weld",part)
+	weld.Part0 = part --Attach to the handle
+	weld.Part1 = Character["UpperTorso"] --Attach to the right hand.
+	weld.C0 = CFrame.new(0, 0, 0.7) + Vector3.new(0,Character["UpperTorso"].Size.Y/2,0)
+	weld.C0 = CFrame.new(0, 0, 0.7) * CFrame.Angles(math.rad(270), math.rad(180), 0)
+			 
+	-- selection box to show part extents
+	--local box = Instance.new("SelectionBox", part)
+	--box.Adornee = part
+			 
+	part.Parent = Character
+			 
+	-- animate offset and scale with a tween
+	local tween = TweenService:Create(
+	    mesh,
+		TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0),
+		{Scale = Vector3.new(0.4, 0.4, 0.4), Offset = Vector3.new(0, 0, 0)}
+	)
+			
+	local block = Character.Humanoid:LoadAnimation(script.Parent.Block)
+			
+	block:Play()		 
+	tween:Play()
+	wait(2.0)
+	tween:Destroy()
+	part:Destroy()
+	mesh:Destroy()
+end
+
+local function shield_bash_ablty(actionName, inputState, inputObj)
+	local TweenService = game:GetService("TweenService")
+	
+	-- instance a part and a mesh
+	local part = Instance.new("Part")
+	part.Size = Vector3.new(4, 8, 4)
+	part.Position = Vector3.new(0, 4, 0)
+	part.Anchored = false
+	part.CanCollide = false 
+	part.Transparency = 0.8
+	
+	local mesh = Instance.new("SpecialMesh", part)
+	mesh.MeshType = Enum.MeshType.FileMesh
+	mesh.MeshId = "rbxassetid://185943338"
+	mesh.TextureId = "rbxassetid://1064384429"
+	mesh.Offset = Vector3.new(0, 0, 0)
+	mesh.Scale = Vector3.new(2, 2, 2)
+	
+	local Character =  script.Parent.Parent -- Character
+	local weld = Instance.new("Weld",part)
+	weld.Part0 = part --Attach to the handle
+	weld.Part1 = Character["LeftLowerArm"] --Attach to the right hand.
+	weld.C0 = CFrame.new(0, 0, 0) + Vector3.new(0,Character["LeftLowerArm"].Size.Y/2,0)
+	weld.C0 = CFrame.new(0, 0, 0) * CFrame.Angles(0, math.rad(180), 0)
+	
+	part.Parent = Character
+			 
+	-- animate offset and scale with a tween
+	local tween = TweenService:Create(
+	    mesh,
+		TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0),
+		{Scale = Vector3.new(2, 2, 2), Offset = Vector3.new(0, 0, 0)}
+	)
+			
+	local shieldBash = Character.Humanoid:LoadAnimation(script.Parent.ShieldBash)
+			
+	shieldBash:Play()		 
+	tween:Play()
+	wait(2.0)
+	tween:Destroy()
+	part:Destroy()
+	mesh:Destroy()
+end
+
+local function whirlwind_ult(actionName, inputState, inputObj)
+
+end
+	
+ContextActionService:BindAction("inspiration", inspiration_ablty, false, Enum.KeyCode.C)
+ContextActionService:BindAction("whirlwind", whirlwind_ult, false, Enum.KeyCode.V)
+ContextActionService:BindAction("shield_bash", shield_bash_ablty, false, Enum.KeyCode.F)
+ContextActionService:BindAction("shield_wall", shield_wall_ablty, false, Enum.KeyCode.G)
