@@ -1,32 +1,39 @@
 local value = 1
 local alreadySwing = false
 
-local Player = game:GetService("Players").LocalPlayer
-local Character = Player.Character or Player.CharacterAdded:Wait()
-
 script.Parent.Equipped:Connect(function(Mouse)
+	local Player = game.Players.LocalPlayer
+	local Character = Player.Character or Player.CharacterAdded:Wait()
+	
+	while Character.Parent == nil do		
+	    Character.AncestryChanged:wait()
+	end
+	
 	local animation1 = Character.Humanoid:LoadAnimation(script.Parent.BasicAttack1)
 	local animation2 = Character.Humanoid:LoadAnimation(script.Parent.BasicAttack2)
 	local animation3 = Character.Humanoid:LoadAnimation(script.Parent.BasicAttack3)
 	Mouse.Button1Down:Connect(function()	
 		if value == 1 and alreadySwing == false then
+			alreadySwing = true
 			animation1:Play()
 			animation3:Stop()
 			value = 2
+			wait(0.3)
+			alreadySwing = false
+		elseif value == 2 and alreadySwing == false  then
 			alreadySwing = true
-		end
-		if value == 2 and alreadySwing == false  then
 			animation2:Play()
 			animation1:Stop()
 			value = 3
+			wait(0.3)
+			alreadySwing = false
+		elseif value == 3 and alreadySwing == false  then
 			alreadySwing = true
-		end
-		if value == 3 and alreadySwing == false  then
 			animation3:Play()
 			animation2:Stop()
 			value = 1
-			alreadySwing = true
+			wait(0.3)
+			alreadySwing = false
 		end
-		alreadySwing = false
 	end)
 end)
