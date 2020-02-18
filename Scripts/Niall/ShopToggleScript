@@ -1,6 +1,6 @@
 local button = script.Parent
 local frame = script.Parent.Parent.ShopFrame
-local toggled = false
+local toggled = true
  
 local function onButtonActivated()
 	if toggled == false then
