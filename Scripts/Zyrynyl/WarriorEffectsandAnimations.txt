@@ -1,0 +1,64 @@
+
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+local parent = script.Parent
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ 
+local remoteEvent = ReplicatedStorage:WaitForChild("WarriorEffectBash")
+local remoteEvent2 = ReplicatedStorage:WaitForChild("WarriorEffectBlock")
+local remoteEvent3 = ReplicatedStorage:WaitForChild("WarriorEffectInspire")
+local remoteEvent4 = ReplicatedStorage:WaitForChild("WarriorEffectSpin")
+
+
+local function inspiration_ablty(actionName, inputState, inputObj)
+	local Character =  script.Parent.Parent -- Character
+		
+	local inspiration = Character.Humanoid:LoadAnimation(script.Parent.Inspire)
+	
+	remoteEvent3:FireServer(Character)			
+	inspiration:Play()		 
+	Character.Humanoid.WalkSpeed = 32
+	wait(4)
+	Character.Humanoid.WalkSpeed = 20
+end
+
+local function shield_wall_ablty(actionName, inputState, inputObj)			
+	local Character =  script.Parent.Parent -- Character
+			
+	local block = Character.Humanoid:LoadAnimation(script.Parent.Block)
+	
+	remoteEvent2:FireServer(Character)	
+	block:Play()
+	Character.Humanoid.WalkSpeed = 5	 
+	wait(2.0)
+	Character.Humanoid.WalkSpeed = 20
+end
+
+local function shield_bash_ablty(actionName, inputState, inputObj)	
+	local Character =  script.Parent.Parent -- Character
+	
+	local shieldBash = Character.Humanoid:LoadAnimation(script.Parent.ShieldBash)
+	
+	remoteEvent:FireServer(Character)	
+	shieldBash:Play()		 
+end
+
+local function whirlwind_ult(actionName, inputState, inputObj)	
+	local Character =  script.Parent.Parent -- Character
+	
+	local spin = Character.Humanoid:LoadAnimation(script.Parent.Spin)
+			
+	remoteEvent4:FireServer(Character)
+	spin:Play()		
+end
+	
+ContextActionService:BindAction("inspiration", inspiration_ablty, false, Enum.KeyCode.C)
+ContextActionService:BindAction("whirlwind", whirlwind_ult, false, Enum.KeyCode.V)
+ContextActionService:BindAction("shield_bash", shield_bash_ablty, false, Enum.KeyCode.F)
+ContextActionService:BindAction("shield_wall", shield_wall_ablty, false, Enum.KeyCode.G)	
+

@@ -1,0 +1,60 @@
+
+
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+local parent = script.Parent
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ 
+local remoteEvent = ReplicatedStorage:WaitForChild("MageEffectAB")
+local remoteEvent2 = ReplicatedStorage:WaitForChild("MageEffectBlizzard")
+
+
+
+local function arcane_blast(actionName, inputState, inputObj)			
+	local Character =  script.Parent.Parent -- Character
+			
+	local arcane_blast = Character.Humanoid:LoadAnimation(script.Parent.ArcaneBlast)
+	
+	remoteEvent2:FireServer(Character)	
+	arcane_blast:Play()
+end
+
+local function blizzard_ult(actionName, inputState, inputObj)	
+	local Character =  script.Parent.Parent -- Character
+	
+	local blizzard = Character.Humanoid:LoadAnimation(script.Parent.Blizzard)
+	
+	remoteEvent:FireServer(Character)	
+	blizzard:Play()
+	Character.Humanoid.WalkSpeed = 0
+	wait(2.0)
+	Character.Humanoid.WalkSpeed = 0		 
+end
+
+local function fireball(actionName, inputState, inputObj)	
+	local Character =  script.Parent.Parent -- Character
+	
+	local fireball = Character.Humanoid:LoadAnimation(script.Parent.Fireball)
+	
+	fireball:Play()		 
+end
+
+local function force_push(actionName, inputState, inputObj)	
+	local Character =  script.Parent.Parent -- Character
+	
+	local force_push = Character.Humanoid:LoadAnimation(script.Parent.ForcePush)
+	
+	force_push:Play()		 
+end
+
+
+	
+ContextActionService:BindAction("arcane_blast", arcane_blast(), false, Enum.KeyCode.C)
+ContextActionService:BindAction("blizzard", blizzard_ult, false, Enum.KeyCode.V)
+ContextActionService:BindAction("fireball", fireball, false, Enum.KeyCode.F)
+ContextActionService:BindAction("force_push", force_push, false, Enum.KeyCode.G)	

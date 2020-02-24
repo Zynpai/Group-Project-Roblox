@@ -1,0 +1,54 @@
+--local Players = game.Player
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ 
+local remoteEvent = ReplicatedStorage:WaitForChild("WarriorEffectBash")
+ 
+-- Create a new part
+local function onCreatePart(player)
+	print(player.Name .. " fired the remote event")
+	local TweenService = game:GetService("TweenService")
+		 
+	-- instance a part and a mesh
+	local part = Instance.new("Part")
+	part.Anchored = false
+	part.CanCollide = false 
+	part.Transparency = 0.8
+	
+	local mesh = Instance.new("SpecialMesh", part)
+	mesh.MeshType = Enum.MeshType.FileMesh
+	mesh.MeshId = "rbxassetid://185943338"
+	mesh.TextureId = "rbxassetid://1064384429"
+	--mesh = script.Mesh
+	mesh.Offset = Vector3.new(0, 0, 0)
+	mesh.Scale = Vector3.new(3, 3, 3)
+	
+	local Character = player.Character
+	--local Character =  script.Parent.Parent -- Character
+	local weld = Instance.new("Weld",part)
+	weld.Part0 = part --Attach to the handle
+	weld.Part1 = Character["LeftLowerArm"] --Attach to the right hand.
+	weld.C0 = CFrame.new(0, 0, 0) + Vector3.new(0,Character["LeftLowerArm"].Size.Y/2,0)
+	weld.C0 = CFrame.new(0, 0, 0) * CFrame.Angles(0, math.rad(180), 0)
+	
+	part.Parent = Character
+			 
+	-- animate offset and scale with a tween
+	local tween = TweenService:Create(
+	    mesh,
+		TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0),
+		{Scale = Vector3.new(3, 3, 3), Offset = Vector3.new(0, 0, 0)}
+	)
+			
+			
+							 
+	tween:Play()
+	wait(2.0)
+	tween:Destroy()
+	part:Destroy()
+	mesh:Destroy()
+
+end
+
+ 
+-- Call "onCreatePart()" when the client fires the remote event
+remoteEvent.OnServerEvent:Connect(onCreatePart)
