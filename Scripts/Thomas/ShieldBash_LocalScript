@@ -1,0 +1,10 @@
+local userInputService = game:GetService("UserInputService")
+local RepStore = game:GetService("ReplicatedStorage")
+
+userInputService.InputBegan:Connect(function(input) 
+	
+	if input.KeyCode == Enum.KeyCode.PageUp then
+	RepStore.WarriorAbltyShieldBash:FireServer()
+	end
+	
+end)
