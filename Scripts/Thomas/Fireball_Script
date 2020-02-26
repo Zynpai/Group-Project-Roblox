@@ -1,0 +1,13 @@
+local RepStore = game:GetService("ReplicatedStorage")
+
+RepStore.MageAbltyFireBall.OnServerEvent:Connect(function(plr) 
+	local char = plr.Character
+	local fireball = RepStore.Fireball:Clone()
+	fireball.Parent = workspace
+	fireball.CFrame = char.UpperTorso.CFrame * CFrame.new(0,0,-5)
+	local bV = Instance.new("BodyVelocity")
+	bV.Parent = fireball
+	bV.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+	bV.Velocity = char.UpperTorso.CFrame.lookVector * 100
+	
+end)
