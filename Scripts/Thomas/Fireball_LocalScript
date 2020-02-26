@@ -1,0 +1,10 @@
+local userInputService = game:GetService("UserInputService")
+local RepStore = game:GetService("ReplicatedStorage")
+
+userInputService.InputBegan:Connect(function(input) 
+	
+	if input.KeyCode == Enum.KeyCode.Q then
+	RepStore.MageAbltyFireBall:FireServer()
+	end
+	
+end)
