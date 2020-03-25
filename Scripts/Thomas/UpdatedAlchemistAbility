@@ -1,0 +1,125 @@
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+local parent = script.Parent
+local UIS = game:GetService("UserInputService")
+local mouse = game.Players.LocalPlayer:GetMouse()
+local Class = game.Players.LocalPlayer:FindFirstChild("Class")
+
+local cooldownFinishedPoison = true
+local cooldownFinishedHeal = true
+local cooldownFinishedSlow = true
+local currentAbility = ""
+
+-- COOLDOWNS
+local poisonCd = 5
+local slowCd = 10
+local healCd = 12
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+
+local function cooldown()
+	-- Poison
+	if currentAbility == "poison" then
+		-- Reset current ability
+		currentAbility = ""
+		-- Check if cooldown is up
+		if cooldownFinishedPoison then
+			-- Set the cooldown to down	
+			cooldownFinishedPoison = false
+			
+			local Character =  script.Parent.Parent -- Character
+			local throw = Character.Humanoid:LoadAnimation(script.Parent.AlchemistThrow)
+		
+			-- Fire Server Event
+			game.ReplicatedStorage.Events.ThrowPoisonBottle:FireServer(mouse.Hit.Position)
+			throw:Play()
+			
+			-- Wait for the cooldown to finish
+			wait(poisonCd)
+			cooldownFinishedPoison = true	
+		end
+	end
+	
+	-- Slow
+	if currentAbility == "slow" then
+		-- Reset current ability
+		currentAbility = ""
+		-- Check if cooldown is up
+		if cooldownFinishedSlow then
+			-- Set the cooldown to down
+			cooldownFinishedSlow = false
+			
+		    local Character =  script.Parent.Parent -- Character
+			local throw = Character.Humanoid:LoadAnimation(script.Parent.AlchemistThrow)
+			
+			-- Fire Server Event
+			game.ReplicatedStorage.Events.ThrowSlowingPotion:FireServer(mouse.Hit.Position)
+			throw:Play()
+			
+			-- Wait for the cooldown to finish
+			wait(slowCd)
+			cooldownFinishedSlow = true
+		end
+	end
+	
+	-- Heal
+	if currentAbility == "heal" then
+		-- Reset current ability
+		currentAbility = ""
+		print("heal ability cooldown check initiated")
+		-- Check if cooldown is up
+		if cooldownFinishedHeal then
+			print("heal ability cooldown off")
+			-- Set the cooldown to down
+			cooldownFinishedHeal = false
+			
+		    local Character =  script.Parent.Parent -- Character
+			local throw = Character.Humanoid:LoadAnimation(script.Parent.AlchemistThrow)
+			print("casting ability")
+			-- Fire Server Event
+			game.ReplicatedStorage.Events.ThrowHealingBottle:FireServer(mouse.Hit.Position)
+			throw:Play()
+			
+			-- Wait for the cooldown to finish
+			wait(healCd)
+			cooldownFinishedHeal = true
+		end
+	end
+
+end
+
+local function poison_throw(actionName, inputState, inputObj)
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "poison"
+		cooldown()
+	end
+end
+
+local function slow_throw(actionName, inputState, inputObj)
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "slow"
+		cooldown()		
+	end	
+end
+
+local function heal_throw(actionName, inputState, inputObj)
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "heal"
+		cooldown()
+	end
+end
+
+
+
+ContextActionService:BindAction("throw_poison", poison_throw, false, Enum.KeyCode.Q)
+ContextActionService:BindAction("throw_slow", slow_throw, false, Enum.KeyCode.R)
+ContextActionService:BindAction("heal_potion", heal_throw, false, Enum.KeyCode.E)
+
+
+
+
