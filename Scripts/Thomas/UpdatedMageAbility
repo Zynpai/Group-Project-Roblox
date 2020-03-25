@@ -1,0 +1,126 @@
+local ContextActionService = game:GetService("ContextActionService")
+-- Gets the player
+local player = game.Players.LocalPlayer
+-- Create character object
+local char = player.Character
+
+local parent = script.Parent
+local UIS = game:GetService("UserInputService")
+local mouse = game.Players.LocalPlayer:GetMouse()
+local Class = game.Players.LocalPlayer:FindFirstChild("Class")
+
+local cooldownFinishedArcane = true
+local cooldownFinishedBlizzard = true
+local cooldownFinishedFireball = true
+local currentAbility = ""
+
+-- COOLDOWNS
+local arcaneBlastCd = 5
+local blizzardCd = 15
+local fireballCd = 7
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ 
+-- ANIMATIONS
+local remoteEvent = ReplicatedStorage:WaitForChild("MageEffectAB")
+local remoteEvent2 = ReplicatedStorage:WaitForChild("MageEffectBlizzard")
+
+local function cooldown()
+	-- Arcane blast
+	if currentAbility == "arcane_blast" then
+		-- Reset current ability
+		currentAbility = ""
+		-- Check cooldown
+		if arcaneBlastCd then
+			-- Set cooldown to off
+			arcaneBlastCd = false
+			
+			local Character =  script.Parent.Parent
+			local arcane_blast = Character.Humanoid:LoadAnimation(script.Parent.ArcaneBlast)
+			
+			-- Fire server event (arcane blast)
+
+		end
+	end
+	-- Fireball
+	if currentAbility == "fireball" then
+		-- Reset current ability
+		currentAbility = ""
+		-- Check cooldown
+		if fireballCd then
+			-- Set cooldown to off
+			fireballCd = false
+			
+			local Character = script.Parent.Parent
+			local fireball = Character.Humanoid:LoadAnimation(script.Parent.Fireball)
+			
+			print("WARRRNINNNGGG")
+			-- Throw server event
+			game.ReplicatedStorage.Events.FireBall:FireServer(mouse.Hit.Position)
+			fireball:Play()		
+			
+			wait(fireballCd)
+			fireballCd = true 
+			
+		end
+		
+	end
+	-- Blizzard
+	if currentAbility == "blizzard" then
+		-- Reset current ability
+		currentAbility = ""
+		-- Check cooldown
+		if blizzardCd then 
+			-- Set cooldown to off
+			blizzardCd = false
+			
+			local Character = script.Parent.Parent
+			local blizzard = Character.Humanoid:LoadAnimation(script.Parent.Blizzard)
+			
+			remoteEvent2:FireServer(Character)	
+			Character.Humanoid.WalkSpeed = 0
+			wait(0.5)
+			Character.Humanoid.WalkSpeed = 20	
+			
+			-- Fire server event
+			-- game.ReplicatedStorage.Events.Blizzard:FireServer(mouse.Hit.Position)
+			blizzard:Play()
+
+			
+			wait(blizzardCd)
+			blizzardCd = true	
+			
+		end
+	end
+end
+
+
+local function arcane_blast(actionName, inputState, inputObj)			
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "arcane_blast"
+		cooldown() 
+	end
+end
+
+local function blizzard_ult(actionName, inputState, inputObj)	
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "blizzard"
+		cooldown() 
+	end
+end
+
+local function fireball(actionName, inputState, inputObj)	
+	if inputState == Enum.UserInputState.Begin then
+		currentAbility = "fireball"
+		cooldown() 
+	end
+end
+
+
+
+	
+ContextActionService:BindAction("arcane_blast", arcane_blast, false, Enum.KeyCode.Q)
+ContextActionService:BindAction("blizzard", blizzard_ult, false, Enum.KeyCode.R)
+ContextActionService:BindAction("fireball", fireball, false, Enum.KeyCode.E)
+
+
