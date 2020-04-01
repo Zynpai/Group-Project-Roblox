@@ -1,0 +1,18 @@
+local event = game.ReplicatedStorage.ChangeClass
+local frame = script.Parent
+
+
+frame.Warrior.MouseButton1Click:Connect(function()
+	frame.Visible= false;
+	event:FireServer("Warrior")
+end)
+
+frame.Mage.MouseButton1Click:Connect(function()
+	frame.Visible= false;
+	event:FireServer("Mage")
+end)
+
+frame.Alchemist.MouseButton1Click:Connect(function()
+	frame.Visible= false;
+	event:FireServer("Alchemist")
+end)

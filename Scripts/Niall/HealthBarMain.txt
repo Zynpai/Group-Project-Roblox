@@ -1,0 +1,24 @@
+local HealthBarFrame = script.Parent
+local Holder = HealthBarFrame:WaitForChild("Holder")
+local Background = HealthBarFrame:WaitForChild("Background")
+local Player = game.Players.LocalPlayer
+local Character = Player.Character
+
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+
+repeat wait() until Character:FindFirstChild("Humanoid")
+local Humanoid = Character:FindFirstChild("Humanoid")
+
+local DotSize = Holder.Left.AbsoluteSize.X
+Holder.Center.Size = UDim2.new(1,-DotSize,1,0)
+Background.Center.Size = UDim2.new(1,-DotSize,1,0)
+
+Humanoid.HealthChanged:Connect(function(Health)
+		local MaxHealth = Humanoid.MaxHealth
+		Holder:TweenSize(UDim2.new(Health/MaxHealth,0,1,0), Enum.EasingDirection.Out, Enum.EasingStyle.Bounce, .5, true)
+		local Color = Color3.fromRGB(170,0,0):Lerp(Color3.fromRGB(85,170,0),Health/MaxHealth)
+		Holder.Center.BackgroundColor3 = Color
+		Holder.Right.ImageColor3 = Color
+		Holder.Left.ImageColor3 = Color
+end)

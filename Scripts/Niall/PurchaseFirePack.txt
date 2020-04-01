@@ -1,0 +1,38 @@
+local MarketplaceService = game:GetService("MarketplaceService")
+local Players = game:GetService("Players")
+ 
+local gamePassID = 8617233  
+ 
+-- Function to prompt purchase of the game pass
+local function promptPurchase()
+ 
+	local player = Players.LocalPlayer
+	local hasPass = false
+ 
+	local success, message = pcall(function()
+		hasPass = MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePassID)
+	end)
+ 
+	if not success then
+		hasPass = MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePassID)
+		warn("Error while checking if player has pass: " .. tostring(message))
+		return
+	end
+ 
+	if hasPass then
+		-- Player already owns the game pass; tell them somehow
+	else
+		-- Player does NOT own the game pass; prompt them to purchase
+		MarketplaceService:PromptGamePassPurchase(player, gamePassID)
+	end
+end
+
+
+
+local button = script.Parent
+
+local function onButtonActivated()
+	promptPurchase()
+end
+
+button.Activated:Connect(onButtonActivated)

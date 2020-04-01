@@ -1,0 +1,45 @@
+--variables--
+local playButton = script.Parent.PlayButton
+local quitButton = script.parent.QuitButton
+local mainFrame = script.Parent
+local HUD = script.Parent.Parent
+local HPHUD = script.Parent.Parent.Parent:WaitForChild("HealthBar")
+HPHUD = HPHUD:WaitForChild("HealthBarFrame")
+HPHUD.Visible = false
+
+--camera--
+local cam = workspace.CurrentCamera
+local Player = game.Players.LocalPlayer
+local camPoints = workspace:WaitForChild("Camera Points")
+
+
+
+--main--
+mainFrame.Visible = true
+repeat wait() until Player.Character
+cam.CameraType = "Scriptable"
+cam.FieldOfView = 80
+
+cam.CFrame = camPoints:FindFirstChild("Camera").CFrame
+HUD = HUD:FindFirstChild("HUDFrame")
+HUD.Visible = false;
+
+--scripts--
+
+playButton.MouseButton1Click:Connect(function()
+	HUD.Visible = true;
+	HUD = script.Parent.Parent
+	mainFrame.Visible = false
+	HUD = HUD:FindFirstChild("TeamFrame")
+	HUD.Visible = true
+	HPHUD.Visible = true
+	cam.CFrame = CFrame.new(10,50,75)
+	cam.CameraSubject = (Player:FindFirstChild("Humanoid"));
+	cam.CameraType = Enum.CameraType.Custom
+	Player.CameraMaxZoomDistance = 13
+	Player.CameraMinZoomDistance = 13
+end)
+
+quitButton.MouseButton1Click:Connect(function()
+	game.Players.LocalPlayer:Kick("Quit Game")
+end)
